@@ -11,7 +11,7 @@ namespace FGame3D
 {
     class Player
     {
-        public int visibleDistance = 500;
+        public const int visibleDistance = 500;
         public float gravitationConstant = 0.01f;
         private float jumpSpeed = 0.5f;
         public Vector3 position;
@@ -41,7 +41,7 @@ namespace FGame3D
         private float resistance = 0.8f;
         public float gorisontalAngle;//degrees
         public float verticalAngle;//degrees
-        public const float rotateSpeed = 3;
+        public const float rotateSpeed = 1;
         public const float movementSpeed = 0.01f;
         public Player(Vector3 position, float gorisontalAngle, float verticalAngle)
         {
@@ -60,8 +60,14 @@ namespace FGame3D
             sight.Y = l * (float)Math.Sin(gorisontalAngle * Math.PI / 180);
             sight.Normalize();
         }
-        public void Update(KeyboardState keyboardState, GameMap map)
+        public void Update(KeyboardState keyboardState, GameMap map,Game1 game)
         {
+            int centerX = game.GraphicsDevice.Viewport.Width / 2;
+            int centerY = game.GraphicsDevice.Viewport.Height / 2;
+            MouseState mouse = Mouse.GetState();
+            Mouse.SetPosition(centerX, centerY);
+            gorisontalAngle -= (mouse.X - centerX) * rotateSpeed;
+            verticalAngle -= (mouse.Y - centerY) * rotateSpeed;
             Vector2 v1 = new Vector2(sight.X, sight.Y);
             v1.Normalize();
             Vector2 v2 = new Vector2(-v1.Y, v1.X);
@@ -71,19 +77,19 @@ namespace FGame3D
             {
                 speed.Z += jumpSpeed;
             }
-            if (keyboardState.IsKeyDown(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.W))
             {
                 gorisontalAcceleration += v1;
             }
-            if (keyboardState.IsKeyDown(Keys.Down))
+            if (keyboardState.IsKeyDown(Keys.S))
             {
                 gorisontalAcceleration -= v1;
             }
-            if (keyboardState.IsKeyDown(Keys.Left))
+            if (keyboardState.IsKeyDown(Keys.A))
             {
                 gorisontalAcceleration += v2;
             }
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (keyboardState.IsKeyDown(Keys.D))
             {
                 gorisontalAcceleration -= v2;
             }
@@ -140,7 +146,7 @@ namespace FGame3D
                 {
                     for (int z = z0; z <= z1; z++)
                     {
-                        if (map[x, y, z] != null)
+                        if (map[x, y, z] != null && map[x, y, z].blockType.isObstacle)
                         {
                             b.Add(map[x, y, z]);
                         }

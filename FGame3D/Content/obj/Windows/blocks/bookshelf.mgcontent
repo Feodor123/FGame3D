@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>c:/users/axel/documents/visual studio 2017/Projects/FGame3D/FGame3D/Content/blocks/bookshelf.png</SourceFile>
+  <SourceFile>C:/Users/Axel/Documents/Visual Studio 2017/Projects/FGame3D/FGame3D/Content/blocks/bookshelf.png</SourceFile>
   <SourceTime>2017-09-18T08:39:30+03:00</SourceTime>
-  <DestFile>c:/users/axel/documents/visual studio 2017/Projects/FGame3D/FGame3D/Content/bin/Windows/blocks/bookshelf.xnb</DestFile>
-  <DestTime>2017-12-29T16:11:45.286+03:00</DestTime>
+  <DestFile>C:/Users/Axel/Documents/Visual Studio 2017/Projects/FGame3D/FGame3D/Content/bin/Windows/blocks/bookshelf.xnb</DestFile>
+  <DestTime>2017-12-30T16:12:35.8822+03:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T18:05:36+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

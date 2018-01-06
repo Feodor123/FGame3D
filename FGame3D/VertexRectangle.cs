@@ -11,14 +11,17 @@ namespace FGame3D
 {
     class VertexRectangle
     {
+        public int lightPower = 0;        
+        public Color color;
         public int type;
-        public Vector3[] points = new Vector3[4];
-        public Texture2D texture;
-        public VertexPositionTexture[] vertexes = new VertexPositionTexture[6];
+        public Rectangle atlasRectangle;
+        public Vector3[] points = new Vector3[4];              
+        public VertexPositionColorTexture[] vertexes = new VertexPositionColorTexture[6];
 
-        public VertexRectangle(Vector3 v0, Vector3 v1, Texture2D rectangleTexture)
+        public VertexRectangle(Vector3 v0, Vector3 v1, Rectangle atlasRectangle,Color color)
         {
-            this.texture = rectangleTexture;
+            this.color = color;
+            this.atlasRectangle = atlasRectangle;
             int i = 0;
             if (v0.X == v1.X)
             {
@@ -53,16 +56,22 @@ namespace FGame3D
             }
             vertexes[0].Position = points[2];
             vertexes[0].TextureCoordinate = new Vector2(1, 0);
+            vertexes[0].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
             vertexes[1].Position = points[1];
             vertexes[1].TextureCoordinate = new Vector2(0, 0);
+            vertexes[1].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
             vertexes[2].Position = points[0];
             vertexes[2].TextureCoordinate = new Vector2(0, 1);
+            vertexes[2].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
             vertexes[3].Position = points[2];
             vertexes[3].TextureCoordinate = new Vector2(1, 0);
+            vertexes[3].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
             vertexes[4].Position = points[0];
             vertexes[4].TextureCoordinate = new Vector2(0, 1);
+            vertexes[4].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
             vertexes[5].Position = points[3];
             vertexes[5].TextureCoordinate = new Vector2(1, 1);
+            vertexes[5].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
         }
         public static bool PointBelong(Vector3 p, VertexRectangle rec)
         {
@@ -101,6 +110,15 @@ namespace FGame3D
             }
             return false;
         }
+        public void UpdateLight()
+        {
+            vertexes[0].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
+            vertexes[1].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
+            vertexes[2].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
+            vertexes[3].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
+            vertexes[4].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
+            vertexes[5].Color = color * (float)Math.Pow(GameMap.lightReduse, GameMap.maxLightPower - lightPower);
+        }
         public static VertexRectangle[] Absorb(VertexRectangle rec1, VertexRectangle rec2)
         {
             List<VertexRectangle> rec = new List<VertexRectangle> { rec1, rec2 };
@@ -120,7 +138,7 @@ namespace FGame3D
         }
         public void Draw(BasicEffect effect, GraphicsDeviceManager graphics)
         {
-            effect.Texture = texture;
+            effect.Texture = TextureAtlas.texture;
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
